@@ -1,0 +1,14 @@
+
+version: '3'
+services:
+
+  frontend:
+    container_name: frontend
+    image: frontend:2.0.1b6
+    ports:
+      - 3000:3000
+    environment:
+      - base_url=backend_url:9090
+    external_links:
+      - backend:backend_url
+    restart: always
