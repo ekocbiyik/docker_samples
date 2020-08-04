@@ -1,0 +1,25 @@
+** docker kurulumu için işlem adımları **
+- centos versiyonu -> 3.10.0-1062.el7.x86_64
+- kullandığımız docker versiyonu -> 19.03.12-3 (https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-19.03.12-3.el7.x86_64.rpm)
+
+- internet bağlantısı olan centos bir cihaz üzerinde aşağıdaki komutlar çalıştırılır. Cihazdaki centos versiyonu ile yukarıda belirtilen centos versiyonu aynı olmalı! 
+- yum install -y epel-release.noarch
+- ilk olarak /etc/yum.repos.d/ dizini altında bulunan her iki dosya içindeki "baseurl" ile başlayan satırlar aktif edilip, "metalink" ile başlayan satırlar yorum yapılır
+- yum-config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+- yum-config-manager --enable docker-ce-stable
+- yum makecache fast
+- docker isimli bir dosya oluşturulup içerisine gidilir
+    mkdir docker && cd docker
+- yumdownloader --resolve docker-ce
+- bu aşamada rpm dosyaları inmeye başlıyor, işlem bittikten sonra tüm dosyalar ziplenir
+    tar cvzf ~/docker_kurulum.tar.gz *
+- offline docker kurulumu için gerekli paketler elimizde
+- kurulum paketi oluşturma adımına geçilir
+
+
+sudo rpm -ivh --replacefiles --replacepkgs docker/*.rpm
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
+sudo groupadd docker
+sudo gpasswd -a $USER docker
+sudo service docker restart
